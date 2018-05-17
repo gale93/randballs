@@ -1,13 +1,44 @@
 #include "collisionsystem.hpp"
 
 #include "engine.hpp"
-#include "components\body.hpp"
 #include "components\colorable.hpp"
 
 using namespace GameComponent;
 
+
 CollisionSystem::CollisionSystem()
 {
+}
+
+void CollisionSystem::borders_check(GameComponent::Body & body, sf::Vector2u & borders)
+{
+	if (body.position.y + body.size >= borders.y)
+	{
+		body.position.y = borders.y - body.size - 2;
+		body.direction.y = -body.direction.y;
+	}
+	else if (body.position.y - body.size <= 0)
+	{
+		body.position.y = body.size + 2;
+		body.direction.y = -body.direction.y;
+	}
+
+	if (body.position.x + body.size >= borders.x)
+	{
+		body.position.x = borders.x - body.size - 2;
+		body.direction.x = -body.direction.x;
+	}
+	else if (body.position.x - body.size <= 0)
+	{
+		body.position.x = body.size + 2;
+		body.direction.x = -body.direction.x;
+	}
+}
+
+bool CollisionSystem::isColliding(GameComponent::Body& body, GameComponent::Body& body2)
+{
+	return std::sqrt((body2.position.x - body.position.x)*(body2.position.x - body.position.x) +
+		(body2.position.y - body.position.y) *(body2.position.y - body.position.y)) < body2.size + body.size;
 }
 
 void CollisionSystem::update(const float dt)
@@ -25,28 +56,7 @@ void CollisionSystem::update(const float dt)
 		auto &body = view.get<Body>(*it);
 		auto &colorable = view.get<Colorable>(*it);
 
-		// borders checks
-		if (body.position.y + body.size >= borders.y)
-		{
-			body.position.y = borders.y - body.size - 2;
-			body.direction.y = -body.direction.y;
-		}
-		else if (body.position.y - body.size <= 0)
-		{
-			body.position.y = body.size + 2;
-			body.direction.y = -body.direction.y;
-		}
-
-		if (body.position.x + body.size >= borders.x)
-		{
-			body.position.x = borders.x - body.size - 2;
-			body.direction.x = -body.direction.x;
-		}
-		else if (body.position.x - body.size <= 0)
-		{
-			body.position.x =body.size + 2;
-			body.direction.x = -body.direction.x;
-		}
+		borders_check(body, borders);
 
 		//collisions check ( todo quadtree )
 		for (auto it2 = it+1; it2 != view.end(); it2++)
@@ -54,8 +64,7 @@ void CollisionSystem::update(const float dt)
 			auto &body2 = view.get<Body>(*it2);
 			auto &colorable2 = view.get<Colorable>(*it2);
 
-			if (std::sqrt((body2.position.x - body.position.x)*(body2.position.x - body.position.x) +
-				(body2.position.y - body.position.y) *(body2.position.y - body.position.y)) < body2.size + body.size)
+			if (isColliding(body, body2))
 			{
 				if (colorable.color == colorable2.color)
 				{
