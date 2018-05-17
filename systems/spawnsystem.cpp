@@ -5,6 +5,8 @@
 #include "components\colorable.hpp"
 #include "components\renderable.hpp"
 
+#include "utils.hpp"
+
 using namespace GameComponent;
 
 SpawnSystem::SpawnSystem()
@@ -20,17 +22,11 @@ void SpawnSystem::onInit()
 
 sf::Vector2f SpawnSystem::generateRandomDirection()
 {
-	float x = (std::rand() % 200) - 100;
-	float y = (std::rand() % 200) - 100;
+	sf::Vector2f dir((std::rand() % 200) - 100, (std::rand() % 200) - 100);
 
-	if (x != 0 || y != 0)
-	{
-		float len = sqrt((x * x) + (y * y));
-		x /= len;
-		y /= len;
-	}
+	utils::normalize(dir);
 
-	return sf::Vector2f(x, y);
+	return dir;
 }
 
 void SpawnSystem::receive(const GameEvent::SpawnBall &event)
