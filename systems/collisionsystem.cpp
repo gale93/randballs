@@ -2,9 +2,9 @@
 
 #include "engine.hpp"
 #include "components\colorable.hpp"
+#include "utils.hpp"
 
 using namespace GameComponent;
-
 
 CollisionSystem::CollisionSystem()
 {
@@ -69,9 +69,11 @@ void CollisionSystem::update(const float dt)
 				if (colorable.color == colorable2.color)
 				{
 					body.size++;
-					if (body.size > 8)
+					if (body.size > 8) // todo split in 4 2-sized balls
 						body.size = 8;
 					body.direction += body2.direction;
+
+					utils::normalize(body.direction);
 
 					registry->destroy(*it2);
 				}
