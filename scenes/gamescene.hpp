@@ -3,6 +3,8 @@
 #include "scene.hpp"
 #include "entitymanager.hpp"
 
+#include <SFML\Graphics\Text.hpp>
+
 class GameScene : public Scene
 {
 	EntityManager em;
@@ -11,6 +13,10 @@ class GameScene : public Scene
 
 	bool directional_spawn = false;
 	float directional_spawn_acc = 0.f;
+
+	sf::Font font;
+	sf::Text instructions;
+	bool show_text = true;
 
 public:
 	GameScene();

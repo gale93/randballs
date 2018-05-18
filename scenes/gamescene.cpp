@@ -12,7 +12,15 @@
 
 GameScene::GameScene() : Scene("game")
 {
+	font.loadFromFile("media/DejaVuSans.ttf");
 
+	instructions.setFont(font);
+	instructions.setScale(0.5, 0.5);
+
+	sf::String str = "[Left Mouse] Press and direct to spawn balls\n[Right Mouse] Delete balls in an Zone\n[A] Spawn 500 balls\n[T] Toggle text\n";
+	str += "~ Rules ~\n";
+	str += "Each ball randomly changes its color.\nOn collision if they have the same color they melt, otherwise they bounce";
+	instructions.setString(str);
 }
 
 
@@ -42,16 +50,22 @@ void GameScene::update()
 
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
-			directional_spawn = true;
-			click_position = static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow()));
+			if (event.key.code == sf::Mouse::Left)
+			{
+				directional_spawn = true;
+				click_position = static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow()));
+			}
+
 		}
-		else if (event.type == sf::Event::MouseButtonReleased)
+		else if (event.type == sf::Event::MouseButtonReleased && event.key.code == sf::Mouse::Left)
 		{
 			directional_spawn = false;
 		}
 		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
 			for (int i = 0; i < 500; i++)
 				em.getEventDispatcher()->trigger<GameEvent::SpawnBall>();
+		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::T)
+			show_text = !show_text;
 	}
 }
 
@@ -74,6 +88,10 @@ void GameScene::fixedupdate(const float dt)
 void GameScene::render(const float alpha_lerp)
 {
 	window->clear(sf::Color(83, 83, 83));
+
 	em.onRender(alpha_lerp);
+	if (show_text)
+		window->draw(instructions);
+
 	window->display();
 }
