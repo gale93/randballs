@@ -49,8 +49,8 @@ void CollisionSystem::collide(GameComponent::Body & body, GameComponent::Body & 
 	auto mtd = delta * (((body.size + body2.size) - d) / d);
 
 	// masses
-	float im1 = 1.f + body.size;
-	float im2 = 1.f + body2.size;
+	float im1 = body.size;
+	float im2 = body2.size;
 
 	body.position += mtd * (im1 / (im1 + im2));
 	body2.position -= mtd * (im2 / (im1 + im2));
