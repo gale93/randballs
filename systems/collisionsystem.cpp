@@ -69,11 +69,17 @@ void CollisionSystem::collide(GameComponent::Body & body, GameComponent::Body & 
 	body.direction += impulse * im1;
 	body2.direction -= impulse * im2;
 
-	if (utils::getLength(body.direction) > Body::MAX_SPEED)
-		body.direction *= Body::MAX_SPEED / utils::getLength(body.direction);
+	float b1speed = utils::getLength(body.direction);
+	if ( b1speed > Body::MAX_SPEED)
+		body.direction *= Body::MAX_SPEED / b1speed;
+	else if (b1speed < Body::SPEED)
+		body.direction *= Body::SPEED / b1speed;
 
-	if (utils::getLength(body2.direction) > Body::MAX_SPEED)
-		body2.direction *= Body::MAX_SPEED / utils::getLength(body2.direction);
+	float b2speed = utils::getLength(body2.direction);
+	if (b2speed > Body::MAX_SPEED)
+		body2.direction *= Body::MAX_SPEED / b2speed;
+	else if (b1speed < Body::SPEED)
+		body2.direction *= Body::SPEED / b2speed;
 }
 
 
