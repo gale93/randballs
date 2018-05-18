@@ -43,7 +43,7 @@ void SpawnSystem::receive(const GameEvent::SpawnBall &event)
 	float size = Body::MIN_START_SIZE + static_cast<float>(std::rand() % 2);
 
 	auto entity = registry->create();
-	registry->assign<Body>(entity, position, direction * static_cast<float>(Body::SPEED), size);
+	registry->assign<Body>(entity, position, direction * static_cast<float>(Body::MAX_SPEED), size);
 	registry->assign<Colorable>(entity);
 	registry->assign<Renderable>(entity, position);
 }

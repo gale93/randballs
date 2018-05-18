@@ -16,7 +16,7 @@ namespace GameComponent
 		float size;
 
 		enum {
-			SPEED = 70,
+			MIN_SPEED = 70,
 			MAX_SPEED = 200,
 
 			MIN_START_SIZE = 3,

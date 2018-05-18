@@ -8,6 +8,10 @@ class GameScene : public Scene
 	EntityManager em;
 
 	sf::Vector2f click_position;
+
+	bool directional_spawn = false;
+	float directional_spawn_acc = 0.f;
+
 public:
 	GameScene();
 	~GameScene();

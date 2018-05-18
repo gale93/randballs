@@ -41,11 +41,13 @@ void GameScene::update()
 		handleDefaultEvents(&event);
 
 		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			directional_spawn = true;
 			click_position = static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow()));
+		}
 		else if (event.type == sf::Event::MouseButtonReleased)
 		{
-			em.getEventDispatcher()->trigger<GameEvent::SpawnBall>(click_position, utils::normalize(click_position - 
-				static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow()))));
+			directional_spawn = false;
 		}
 		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
 			for (int i = 0; i < 500; i++)
@@ -55,6 +57,17 @@ void GameScene::update()
 
 void GameScene::fixedupdate(const float dt)
 {
+	directional_spawn_acc += dt;
+	if (directional_spawn && directional_spawn_acc > 0.1f)
+	{
+		auto mouse = static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow()));
+		if (mouse != click_position)
+		{
+			directional_spawn_acc = 0.f;
+			em.getEventDispatcher()->trigger<GameEvent::SpawnBall>(click_position, utils::normalize(click_position - mouse));
+		}
+	}
+
 	em.onUpdate(dt);
 }
 
