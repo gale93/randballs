@@ -101,11 +101,17 @@ void CollisionSystem::update(const float dt)
 					Body *new_body = body.size > body2.size ? &body : &body2;
 
 					new_body->size++;
+					if (body.size >= 12) // splits in 2 identical lesser big balls :D
+					{
+						Body *other_body = body.size > body2.size ? &body2 : &body;
 
-					if (body.size > 8) // todo split in 4 2-sized balls
-						body.size = 8;
+						new_body->size = 6;
+						other_body->size = 6;
 
-					registry->destroy(body.size > body2.size ? *it2 : *it);
+					}
+					else
+						registry->destroy(body.size > body2.size ? *it2 : *it);
+					
 				}
 					
 			}
