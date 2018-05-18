@@ -49,8 +49,8 @@ void CollisionSystem::collide(GameComponent::Body & body, GameComponent::Body & 
 	auto mtd = delta * (((body.size + body2.size) - d) / d);
 
 	// masses
-	float im1 = 1;
-	float im2 = 1;
+	float im1 = 1.f + (body.size / 10);
+	float im2 = 1.f + (body2.size / 10);
 
 	body.position += mtd * (im1 / (im1 + im2));
 	body2.position -= mtd * (im2 / (im1 + im2));
@@ -68,6 +68,9 @@ void CollisionSystem::collide(GameComponent::Body & body, GameComponent::Body & 
 	// change in momentum
 	body.direction += impulse * im1;
 	body2.direction -= impulse * im2;
+
+	body.direction *= Body::MAX_SPEED / utils::getLength(body.direction);
+	body2.direction *= Body::MAX_SPEED / utils::getLength(body2.direction);
 }
 
 
