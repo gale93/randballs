@@ -15,6 +15,7 @@ namespace GameComponent
 		float size = 3.f;
 
 		enum {
+			SPEED = 70,
 			MAX_SPEED = 200
 		};
 	};

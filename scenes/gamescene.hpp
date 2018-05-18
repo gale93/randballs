@@ -6,6 +6,8 @@
 class GameScene : public Scene
 {
 	EntityManager em;
+
+	sf::Vector2f click_position;
 public:
 	GameScene();
 	~GameScene();

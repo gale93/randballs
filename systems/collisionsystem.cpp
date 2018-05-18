@@ -49,8 +49,8 @@ void CollisionSystem::collide(GameComponent::Body & body, GameComponent::Body & 
 	auto mtd = delta * (((body.size + body2.size) - d) / d);
 
 	// masses
-	float im1 = 1.f + (body.size / 10);
-	float im2 = 1.f + (body2.size / 10);
+	float im1 = 1.f + body.size;
+	float im2 = 1.f + body2.size;
 
 	body.position += mtd * (im1 / (im1 + im2));
 	body2.position -= mtd * (im2 / (im1 + im2));
@@ -61,7 +61,7 @@ void CollisionSystem::collide(GameComponent::Body & body, GameComponent::Body & 
 	if (vn > 0.0f) return;
 
 	// collision impulse
-	const float restitution = 0.0f;
+	const float restitution = -0.2f;
 	float i = (-(1.0f + restitution) * vn) / (im1 + im2);
 	auto impulse = mtd * i;
 
@@ -69,8 +69,11 @@ void CollisionSystem::collide(GameComponent::Body & body, GameComponent::Body & 
 	body.direction += impulse * im1;
 	body2.direction -= impulse * im2;
 
-	body.direction *= Body::MAX_SPEED / utils::getLength(body.direction);
-	body2.direction *= Body::MAX_SPEED / utils::getLength(body2.direction);
+	if (utils::getLength(body.direction) > Body::MAX_SPEED)
+		body.direction *= Body::MAX_SPEED / utils::getLength(body.direction);
+
+	if (utils::getLength(body2.direction) > Body::MAX_SPEED)
+		body2.direction *= Body::MAX_SPEED / utils::getLength(body2.direction);
 }
 
 

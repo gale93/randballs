@@ -24,7 +24,7 @@ sf::Vector2f SpawnSystem::generateRandomDirection()
 {
 	sf::Vector2f dir((std::rand() % 200) - 100, (std::rand() % 200) - 100);
 
-	return dir;
+	return utils::normalize(dir);
 }
 
 void SpawnSystem::receive(const GameEvent::SpawnBall &event)
@@ -41,7 +41,7 @@ void SpawnSystem::receive(const GameEvent::SpawnBall &event)
 	}
 
 	auto entity = registry->create();
-	registry->assign<Body>(entity, position, direction);
+	registry->assign<Body>(entity, position, direction * static_cast<float>(Body::SPEED));
 	registry->assign<Colorable>(entity);
 	registry->assign<Renderable>(entity, position);
 }

@@ -7,6 +7,8 @@
 #include "systems\colorsystem.hpp"
 #include "systems\collisionsystem.hpp"
 
+#include "utils.hpp"
+
 
 GameScene::GameScene() : Scene("game")
 {
@@ -28,10 +30,6 @@ void GameScene::init()
 	em.addSystem(std::make_unique<ColorSystem>());
 
 	em.addRenderSystem(std::make_unique<RenderSystem>(&engine->getWindow()));
-
-	// TEST Spawn some balls, todo an interactive way 
-	for (int i = 0; i < 200; i++)
-		em.getEventDispatcher()->trigger<GameEvent::SpawnBall>();
 }
 
 
@@ -41,6 +39,17 @@ void GameScene::update()
 	while (window->pollEvent(event))
 	{
 		handleDefaultEvents(&event);
+
+		if (event.type == sf::Event::MouseButtonPressed)
+			click_position = static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow()));
+		else if (event.type == sf::Event::MouseButtonReleased)
+		{
+			em.getEventDispatcher()->trigger<GameEvent::SpawnBall>(click_position, utils::normalize(click_position - 
+				static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow()))));
+		}
+		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
+			for (int i = 0; i < 500; i++)
+				em.getEventDispatcher()->trigger<GameEvent::SpawnBall>();
 	}
 }
 
