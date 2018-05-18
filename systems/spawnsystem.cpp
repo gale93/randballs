@@ -1,6 +1,8 @@
 #include "engine.hpp"
 #include "spawnsystem.hpp"
 
+#include <SFML\Graphics\Rect.hpp>
+
 #include "components\body.hpp"
 #include "components\colorable.hpp"
 #include "components\renderable.hpp"
@@ -17,6 +19,7 @@ SpawnSystem::SpawnSystem()
 void SpawnSystem::onInit()
 {
 	eventDispatcher->sink<GameEvent::SpawnBall>().connect(this);
+	eventDispatcher->sink<GameEvent::FreeArea>().connect(this);
 }
 
 
@@ -46,4 +49,17 @@ void SpawnSystem::receive(const GameEvent::SpawnBall &event)
 	registry->assign<Body>(entity, position, direction * static_cast<float>(Body::MAX_SPEED), size);
 	registry->assign<Colorable>(entity);
 	registry->assign<Renderable>(entity, position);
+}
+
+void SpawnSystem::receive(const GameEvent::FreeArea &event)
+{
+	const float size = 200;
+	sf::FloatRect border(event.position, sf::Vector2f(size, size));
+	border.top -= size * 0.5f;
+	border.left -= size * 0.5f;
+	
+	registry->view<Body>().each([&](auto entity, Body &body) { 
+		if (border.contains(body.position))
+			registry->destroy(entity);
+	});
 }

@@ -3,6 +3,7 @@
 #include "basesystem.hpp"
 
 #include "events\spawnball.hpp"
+#include "events\freearea.hpp"
 
 class SpawnSystem : public BaseSystem
 {
@@ -13,4 +14,5 @@ public:
 	SpawnSystem();
 
 	void receive(const GameEvent::SpawnBall &);
+	void receive(const GameEvent::FreeArea &);
 };

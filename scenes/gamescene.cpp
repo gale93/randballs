@@ -19,7 +19,7 @@ GameScene::GameScene() : Scene("game")
 
 	sf::String str = "[Left Mouse] Press and direct to spawn balls\n[Right Mouse] Delete balls in an Zone\n[A] Spawn 500 balls\n[T] Toggle text\n";
 	str += "~ Rules ~\n";
-	str += "Each ball randomly changes its color.\nOn collision if they have the same color they melt, otherwise they bounce";
+	str += "Each ball randomly changes its color.\nOn collision if they have the same color they merge, otherwise bounce";
 	instructions.setString(str);
 }
 
@@ -55,6 +55,8 @@ void GameScene::update()
 				directional_spawn = true;
 				click_position = static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow()));
 			}
+			else if (event.key.code == sf::Mouse::Right)
+				em.getEventDispatcher()->trigger<GameEvent::FreeArea>(static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow())));
 
 		}
 		else if (event.type == sf::Event::MouseButtonReleased && event.key.code == sf::Mouse::Left)
