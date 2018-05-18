@@ -30,11 +30,19 @@ sf::Vector2f SpawnSystem::generateRandomDirection()
 void SpawnSystem::receive(const GameEvent::SpawnBall &event)
 {
 	auto size = engine->getWindow().getSize();
-	sf::Vector2f position = sf::Vector2f(std::rand() % size.x, std::rand() % size.y);
+
+	auto position = event.position;
+	auto direction = event.direction;
+
+	if (event.position == sf::Vector2f())
+	{
+		position = sf::Vector2f(std::rand() % size.x, std::rand() % size.y);
+		direction = generateRandomDirection();
+	}
+
 
 	auto entity = registry->create();
-
-	registry->assign<Body>(entity, position, generateRandomDirection());
+	registry->assign<Body>(entity, position, direction);
 	registry->assign<Colorable>(entity);
 	registry->assign<Renderable>(entity, position);
 }
