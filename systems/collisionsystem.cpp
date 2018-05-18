@@ -76,11 +76,6 @@ void CollisionSystem::collide(GameComponent::Body & body, GameComponent::Body & 
 
 void CollisionSystem::update(const float dt)
 {
-	updatetime_acc += dt;
-	if (updatetime_acc <= updatetime)
-		return;
-	updatetime_acc = 0.f;
-
 	auto borders = engine->getWindow().getSize();
 
 	auto view = registry->view<Body, Colorable>();

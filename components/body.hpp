@@ -12,7 +12,7 @@ namespace GameComponent
 		}
 
 		sf::Vector2f position, direction;
-		float size = 8.f;
+		float size = 3.f;
 
 		enum {
 			MAX_SPEED = 200
