@@ -40,7 +40,6 @@ void SpawnSystem::receive(const GameEvent::SpawnBall &event)
 		direction = generateRandomDirection();
 	}
 
-
 	auto entity = registry->create();
 	registry->assign<Body>(entity, position, direction);
 	registry->assign<Colorable>(entity);
