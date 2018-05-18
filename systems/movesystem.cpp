@@ -12,6 +12,6 @@ MoveSystem::MoveSystem()
 void MoveSystem::update(const float dt)
 {
 	registry->view<Body>().each([dt](auto entity, Body &body) {
-		body.position += body.direction * body.speed * dt;
+		body.position += body.direction * dt;
 	});
 }

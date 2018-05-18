@@ -24,8 +24,6 @@ sf::Vector2f SpawnSystem::generateRandomDirection()
 {
 	sf::Vector2f dir((std::rand() % 200) - 100, (std::rand() % 200) - 100);
 
-	utils::normalize(dir);
-
 	return dir;
 }
 

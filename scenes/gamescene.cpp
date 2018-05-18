@@ -30,7 +30,7 @@ void GameScene::init()
 	em.addRenderSystem(std::make_unique<RenderSystem>(&engine->getWindow()));
 
 	// TEST Spawn some balls, todo an interactive way 
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < 50; i++)
 		em.getEventDispatcher()->trigger<GameEvent::SpawnBall>();
 }
 

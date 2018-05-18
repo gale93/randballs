@@ -41,6 +41,36 @@ bool CollisionSystem::isColliding(GameComponent::Body& body, GameComponent::Body
 		(body2.position.y - body.position.y) *(body2.position.y - body.position.y)) < body2.size + body.size;
 }
 
+void CollisionSystem::collide(GameComponent::Body & body, GameComponent::Body & body2)
+{
+	auto delta = body.position - body2.position;
+	float d = utils::getLength(delta);
+
+	auto mtd = delta * (((body.size + body2.size) - d) / d);
+
+	// masses
+	float im1 = 1;
+	float im2 = 1;
+
+	body.position += mtd * (im1 / (im1 + im2));
+	body2.position -= mtd * (im2 / (im1 + im2));
+
+	auto v = body.direction - body2.direction;
+	float vn = utils::dot(v, utils::normalize(mtd));
+
+	if (vn > 0.0f) return;
+
+	// collision impulse
+	const float restitution = 0.0f;
+	float i = (-(1.0f + restitution) * vn) / (im1 + im2);
+	auto impulse = mtd * i;
+
+	// change in momentum
+	body.direction += impulse * im1;
+	body2.direction -= impulse * im2;
+}
+
+
 void CollisionSystem::update(const float dt)
 {
 	updatetime_acc += dt;
@@ -66,22 +96,20 @@ void CollisionSystem::update(const float dt)
 
 			if (isColliding(body, body2))
 			{
+				collide(body, body2);
+
 				if (colorable.color == colorable2.color)
 				{
-					body.size++;
+					Body *new_body = body.size > body2.size ? &body : &body2;
+
+					new_body->size++;
+
 					if (body.size > 8) // todo split in 4 2-sized balls
 						body.size = 8;
-					body.direction += body2.direction;
 
-					utils::normalize(body.direction);
-
-					registry->destroy(*it2);
+					registry->destroy(body.size > body2.size ? *it2 : *it);
 				}
-				else
-				{
-					body.direction = -body.direction;
-					body2.direction = -body2.direction;
-				}
+					
 			}
 
 		}
