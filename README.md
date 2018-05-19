@@ -3,7 +3,7 @@
 Balls ! Just a playground for testing stuff and performances.
 Each ball randomly changes its color. On collision if they have the same color they merge, otherwise bounce.
 
-[![Randballs video url](https://img.youtube.com/vi/VLj4ZbqZiNc/0.jpg)](https://www.youtube.com/watch?v=StTqXEQ2l-Y "Randballs video")
+[![Randballs video url](https://img.youtube.com/vi/VLj4ZbqZiNc/0.jpg)](https://www.youtube.com/watch?v=VLj4ZbqZiNc"Randballs video")
 
 I am using [SFML](https://github.com/SFML/SFML) for rendering and [EnTT](https://github.com/skypjack/entt) for entities management and some few handmade classes that act like an "engine".
 
