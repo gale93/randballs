@@ -2,7 +2,7 @@
 #include "gamescene.hpp"
 
 #include "systems\rendersystem.hpp"
-#include "systems\spawnsystem.hpp"
+#include "systems\usersystem.hpp"
 #include "systems\movesystem.hpp"
 #include "systems\colorsystem.hpp"
 #include "systems\collisionsystem.hpp"
@@ -32,7 +32,7 @@ void GameScene::init()
 {
 	em.init(engine);
 
-	em.addSystem(std::make_unique<SpawnSystem>());
+	em.addSystem(std::make_unique<UserSystem>());
 	em.addSystem(std::make_unique<MoveSystem>());
 	em.addSystem(std::make_unique<CollisionSystem>());
 	em.addSystem(std::make_unique<ColorSystem>());

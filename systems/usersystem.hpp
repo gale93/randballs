@@ -5,13 +5,13 @@
 #include "events\spawnball.hpp"
 #include "events\freearea.hpp"
 
-class SpawnSystem : public BaseSystem
+class UserSystem : public BaseSystem
 {
 	void onInit() override;
 
 	sf::Vector2f generateRandomDirection();
 public:
-	SpawnSystem();
+	UserSystem();
 
 	void receive(const GameEvent::SpawnBall &);
 	void receive(const GameEvent::FreeArea &);

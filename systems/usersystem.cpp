@@ -1,5 +1,5 @@
 #include "engine.hpp"
-#include "spawnsystem.hpp"
+#include "usersystem.hpp"
 
 #include <SFML\Graphics\Rect.hpp>
 
@@ -11,26 +11,26 @@
 
 using namespace GameComponent;
 
-SpawnSystem::SpawnSystem()
+UserSystem::UserSystem()
 {
 	
 }
 
-void SpawnSystem::onInit()
+void UserSystem::onInit()
 {
 	eventDispatcher->sink<GameEvent::SpawnBall>().connect(this);
 	eventDispatcher->sink<GameEvent::FreeArea>().connect(this);
 }
 
 
-sf::Vector2f SpawnSystem::generateRandomDirection()
+sf::Vector2f UserSystem::generateRandomDirection()
 {
 	sf::Vector2f dir((std::rand() % 200) - 100, (std::rand() % 200) - 100);
 
 	return utils::normalize(dir);
 }
 
-void SpawnSystem::receive(const GameEvent::SpawnBall &event)
+void UserSystem::receive(const GameEvent::SpawnBall &event)
 {
 	auto wsize = engine->getWindow().getSize();
 
@@ -51,7 +51,7 @@ void SpawnSystem::receive(const GameEvent::SpawnBall &event)
 	registry->assign<Renderable>(entity, position);
 }
 
-void SpawnSystem::receive(const GameEvent::FreeArea &event)
+void UserSystem::receive(const GameEvent::FreeArea &event)
 {
 	const float size = 200;
 	sf::FloatRect border(event.position, sf::Vector2f(size, size));
