@@ -61,7 +61,7 @@ void CollisionSystem::collide(GameComponent::Body & body, GameComponent::Body & 
 	if (vn > 0.0f) return;
 
 	// collision impulse
-	const float restitution = -0.2f;
+	const float restitution = 0.2f;
 	float i = (-(1.0f + restitution) * vn) / (im1 + im2);
 	auto impulse = mtd * i;
 
