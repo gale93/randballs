@@ -1,7 +1,7 @@
 
 ## What is this ?
 Balls ! Just a playground for testing stuff and performances.
-Each ball randomly changes its color. On collision if they have the same color they merge, otherwise bounce.
+Each ball randomly changes its color. On collision if they have the same color they merge, otherwise bounce. [Try it now](https://github.com/gale93/randballs/releases)
 
 A short video about this:
 
