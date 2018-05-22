@@ -3,6 +3,7 @@
 #include "engine.hpp"
 #include "components\body.hpp"
 #include "components\lerpable.hpp"
+#include "components\holdable.hpp"
 
 #include "utils.hpp"
 
@@ -25,7 +26,7 @@ void MoveSystem::update(const float dt)
 				registry->remove<Lerpable>(entity);
 				
 		}
-		else
+		else if (!registry->has<Holdable>(entity))
 			body.position += body.direction * dt;
 	});
 }

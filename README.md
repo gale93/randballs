@@ -14,6 +14,7 @@ I am using [SFML](https://github.com/SFML/SFML) for rendering and [EnTT](https:/
 **[A]** Spawn 500 balls<br/>
 **[Space]** Delete balls in an Zone<br/>
 **[Right Mouse]** Collapse balls in a zone<br/>
+**[Q]** Hold and cast away all balls in a zone<br/>
 **[T]** Toggle text<br/>
 
 
