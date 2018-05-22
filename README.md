@@ -20,10 +20,11 @@ I am using [SFML](https://github.com/SFML/SFML) for rendering and [EnTT](https:/
 
 ## Todo List
 
-* Implement Quadtree for collisions check
+* ~~Implement Quadtree for collisions check~~ It's rudimental and handmade but for now is fast enough. [Check it here](https://github.com/gale93/randballs/blob/master/systems/collisionsystem.cpp#L88)
 * Endorse graphic ( switching to textures ? )
 * Improve spawn balls options
 * Add obstacles
+* Add Portals
 * Add special effect based on color
 * Add a mass based on shape size. [This is pretty bad handled atm](https://github.com/gale93/randballs/blob/master/systems/collisionsystem.cpp#L52)
 * Let the physics variables be scriptable from the user such as [these](https://github.com/gale93/randballs/blob/master/components/body.hpp#L18)
