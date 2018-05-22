@@ -27,4 +27,9 @@ namespace utils
 		return vec.x * vec2.x + vec.y * vec2.y;
 	}
 
+	inline sf::Vector2f lerp(float t, const sf::Vector2f& a, const sf::Vector2f& b)
+	{
+		return (1 - t)*a + t * b;
+	}
+
 };

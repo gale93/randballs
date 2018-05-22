@@ -9,6 +9,13 @@ A short video about this:
 
 I am using [SFML](https://github.com/SFML/SFML) for rendering and [EnTT](https://github.com/skypjack/entt) for entities management and some few handmade classes that act like an "engine".
 
+## Controls
+**[Left Mouse]** Press and direct to spawn balls<br/> 
+**[A]** Spawn 500 balls<br/>
+**[Space]** Delete balls in an Zone<br/>
+**[Right Mouse]** Collapse balls in a zone<br/>
+**[T]** Toggle text<br/>
+
 
 ## Todo List
 

@@ -17,7 +17,8 @@ GameScene::GameScene() : Scene("game")
 	instructions.setFont(font);
 	instructions.setScale(0.5, 0.5);
 
-	sf::String str = "[Left Mouse] Press and direct to spawn balls\n[Right Mouse] Delete balls in an Zone\n[A] Spawn 500 balls\n[T] Toggle text\n";
+	sf::String str = "[Left Mouse] Press and direct to spawn balls\n[A] Spawn 500 balls\n[T] Toggle text\n";
+	str += "[Right Mouse] Delete balls in an Zone\n[SPACE] Delete balls in an Zone\n";
 	str += "~ Rules ~\n";
 	str += "Each ball randomly changes its color.\nOn collision if they have the same color they merge, otherwise bounce";
 	instructions.setString(str);
@@ -56,7 +57,7 @@ void GameScene::update()
 				click_position = static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow()));
 			}
 			else if (event.key.code == sf::Mouse::Right)
-				em.getEventDispatcher()->trigger<GameEvent::FreeArea>(static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow())));
+				em.getEventDispatcher()->trigger<GameEvent::FreeArea>(static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow())), true);
 
 		}
 		else if (event.type == sf::Event::MouseButtonReleased && event.key.code == sf::Mouse::Left)
@@ -66,6 +67,8 @@ void GameScene::update()
 		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
 			for (int i = 0; i < 500; i++)
 				em.getEventDispatcher()->trigger<GameEvent::SpawnBall>();
+		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
+			em.getEventDispatcher()->trigger<GameEvent::FreeArea>(static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow())), false);
 		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::T)
 			show_text = !show_text;
 	}

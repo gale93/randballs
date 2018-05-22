@@ -10,7 +10,7 @@ namespace GameComponent
 		Colorable() : color(getRandomColor()) {}
 
 		sf::Color color;
-		sf::Time timer = sf::Time::Zero;
+		sf::Time timer, decay;
 
 		sf::Color getRandomColor()
 		{

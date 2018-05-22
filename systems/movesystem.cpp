@@ -2,6 +2,9 @@
 
 #include "engine.hpp"
 #include "components\body.hpp"
+#include "components\lerpable.hpp"
+
+#include "utils.hpp"
 
 using namespace GameComponent;
 
@@ -11,7 +14,18 @@ MoveSystem::MoveSystem()
 
 void MoveSystem::update(const float dt)
 {
-	registry->view<Body>().each([dt](auto entity, Body &body) {
-		body.position += body.direction * dt;
+	registry->view<Body>().each([&](auto entity, Body &body) {
+		if (registry->has<Lerpable>(entity))
+		{
+			auto& lerpable = registry->get<Lerpable>(entity);
+			lerpable.time += dt * 0.5f;
+
+			body.position = utils::lerp(std::min(lerpable.time, 1.f), body.position, lerpable.position);
+			if (body.position == lerpable.position)
+				registry->remove<Lerpable>(entity);
+				
+		}
+		else
+			body.position += body.direction * dt;
 	});
 }

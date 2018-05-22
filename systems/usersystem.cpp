@@ -6,6 +6,7 @@
 #include "components\body.hpp"
 #include "components\colorable.hpp"
 #include "components\renderable.hpp"
+#include "components\lerpable.hpp"
 
 #include "utils.hpp"
 
@@ -58,8 +59,18 @@ void UserSystem::receive(const GameEvent::FreeArea &event)
 	border.top -= size * 0.5f;
 	border.left -= size * 0.5f;
 	
-	registry->view<Body>().each([&](auto entity, Body &body) { 
+	registry->view<Body, Colorable>().each([&](auto entity, Body &body, Colorable& colorable)
+	{ 
 		if (border.contains(body.position))
-			registry->destroy(entity);
+			if (event.collapse)
+			{
+				colorable.color = sf::Color(123, 212, 80);
+				colorable.decay = sf::seconds(3);
+				colorable.timer = sf::Time::Zero;
+
+				registry->assign<Lerpable>(entity, event.position);
+			}
+			else
+				registry->destroy(entity);
 	});
 }
