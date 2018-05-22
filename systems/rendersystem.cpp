@@ -7,6 +7,8 @@
 #include "components\body.hpp"
 #include "components\colorable.hpp"
 
+#include "utils.hpp"
+
 using namespace GameComponent;
 
 RenderSystem::RenderSystem(sf::RenderWindow* window) : window(window)
@@ -16,10 +18,6 @@ RenderSystem::RenderSystem(sf::RenderWindow* window) : window(window)
 
 void RenderSystem::update(const float alpha)
 {
-	auto  lerp = [](float t, const sf::Vector2f& a, const sf::Vector2f& b) -> sf::Vector2f {
-		return (1 - t)*a + t * b;
-	};
-
 	sf::CircleShape shape;
 
 	registry->view<Renderable, Body, Colorable>().each([&](auto entity, Renderable &renderable, Body &body, Colorable& colorable)
@@ -31,7 +29,7 @@ void RenderSystem::update(const float alpha)
 			renderable.current_position = position;
 		}
 
-		position = lerp(alpha, renderable.last_position, renderable.current_position);
+		position = utils::lerp(alpha, renderable.last_position, renderable.current_position);
 
 		shape.setRadius(body.size);
 		shape.setOrigin(shape.getRadius(), shape.getRadius());
