@@ -5,7 +5,7 @@ Each ball randomly changes its color. On collision if they have the same color t
 
 A short video about this:
 
-[![Randballs video url](https://img.youtube.com/vi/VLj4ZbqZiNc/0.jpg)](https://www.youtube.com/watch?v=VLj4ZbqZiNc "Randballs video")
+[![Randballs video url](https://img.youtube.com/vi/J6dccS9BE6c/0.jpg)](https://www.youtube.com/watch?v=J6dccS9BE6c "Randballs video")
 
 I am using [SFML](https://github.com/SFML/SFML) for rendering and [EnTT](https://github.com/skypjack/entt) for entities management and some few handmade classes that act like an "engine".
 
