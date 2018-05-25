@@ -13,6 +13,7 @@ I am using [SFML](https://github.com/SFML/SFML) for rendering and [EnTT](https:/
 **[Left Mouse]** Press and direct to spawn balls<br/> 
 **[A]** Spawn 500 balls<br/>
 **[Space]** Delete balls in an Zone<br/>
+**[Middle Mouse]** Spawn a portal<br/>
 **[Right Mouse]** Collapse balls in a zone<br/>
 **[Q]** Hold and cast away all balls in a zone<br/>
 **[T]** Toggle text<br/>
@@ -24,7 +25,7 @@ I am using [SFML](https://github.com/SFML/SFML) for rendering and [EnTT](https:/
 * Endorse graphic ( switching to textures ? )
 * Improve spawn balls options
 * Add obstacles
-* Add Portals
+* ~~Add Portals~~
 * Add special effect based on color
 * Add a mass based on shape size. [This is pretty bad handled atm](https://github.com/gale93/randballs/blob/master/systems/collisionsystem.cpp#L52)
 * Let the physics variables be scriptable from the user such as [these](https://github.com/gale93/randballs/blob/master/components/body.hpp#L18)

@@ -16,11 +16,12 @@ namespace GameComponent
 		float size;
 
 		enum {
-			MIN_SPEED = 150,
-			MAX_SPEED = 150,
+			SPEED = 150,
 
 			MIN_START_SIZE = 3,
-			MAX_SIZE = 16
+			MAX_SIZE = 14,
+
+			PORTAL_SIZE = 16
 		};
 	};
 }

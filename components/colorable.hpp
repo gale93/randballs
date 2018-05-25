@@ -17,7 +17,7 @@ namespace GameComponent
 			switch (std::rand() % 7)
 			{
 			case 0:		return sf::Color(255, 69, 0);
-			case 1:		return sf::Color(20, 20, 40);
+			case 1:		return sf::Color(180, 180, 180);
 			case 2:		return sf::Color(69, 0, 255);
 			case 3:		return sf::Color(0, 204, 55);
 			case 4:		return sf::Color(204, 0, 149);

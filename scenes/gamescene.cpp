@@ -6,6 +6,7 @@
 #include "systems\movesystem.hpp"
 #include "systems\colorsystem.hpp"
 #include "systems\collisionsystem.hpp"
+#include "systems\teleportsystem.hpp"
 
 #include "utils.hpp"
 
@@ -21,6 +22,7 @@ GameScene::GameScene() : Scene("game")
 	str += "[Left Mouse] Press and direct to spawn balls\n";
 	str += "[A] Spawn 500 balls\n";
 	str += "[Q] Hold and cast away all balls in a zone\n";
+	str += "[Middle Mouse] Spawn a portal\n";
 	str += "[Right Mouse] Collapse balls in a zone\n";
 	str += "[Space] Delete balls in an zone\n";
 	str += "~ Rules ~\n";
@@ -41,10 +43,15 @@ void GameScene::init()
 	em.addSystem(std::make_unique<MoveSystem>());
 	em.addSystem(std::make_unique<CollisionSystem>());
 	em.addSystem(std::make_unique<ColorSystem>());
+	em.addSystem(std::make_unique<Teleportsystem>());
 
 	em.addRenderSystem(std::make_unique<RenderSystem>(&engine->getWindow()));
 }
 
+sf::Vector2f GameScene::getMousePosition()
+{
+	return static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow()));
+}
 
 void GameScene::update()
 {
@@ -58,10 +65,12 @@ void GameScene::update()
 			if (event.key.code == sf::Mouse::Left)
 			{
 				directional_spawn = true;
-				click_position = static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow()));
+				click_position = getMousePosition();
 			}
 			else if (event.key.code == sf::Mouse::Right)
-				em.getEventDispatcher()->trigger<GameEvent::FreeArea>(static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow())), true);
+				em.getEventDispatcher()->trigger<GameEvent::FreeArea>(getMousePosition(), true);
+			else if (event.key.code == sf::Mouse::Middle)
+				em.getEventDispatcher()->trigger<GameEvent::SpawnPortal>(getMousePosition());
 
 		}
 		else if (event.type == sf::Event::MouseButtonReleased && event.key.code == sf::Mouse::Left)
@@ -72,9 +81,9 @@ void GameScene::update()
 			for (int i = 0; i < 500; i++)
 				em.getEventDispatcher()->trigger<GameEvent::SpawnBall>();
 		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
-			em.getEventDispatcher()->trigger<GameEvent::FreeArea>(static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow())), false);
+			em.getEventDispatcher()->trigger<GameEvent::FreeArea>(getMousePosition(), false);
 		else if (event.key.code == sf::Keyboard::Q)
-			em.getEventDispatcher()->trigger<GameEvent::EscapeFromArea>(static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow())), event.type == sf::Event::KeyPressed);
+			em.getEventDispatcher()->trigger<GameEvent::EscapeFromArea>(getMousePosition(), event.type == sf::Event::KeyPressed);
 		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::T)
 			show_text = !show_text;
 	}
@@ -85,7 +94,7 @@ void GameScene::fixedupdate(const float dt)
 	directional_spawn_acc += dt;
 	if (directional_spawn && directional_spawn_acc > 0.1f)
 	{
-		auto mouse = static_cast<sf::Vector2f>(sf::Mouse::getPosition(engine->getWindow()));
+		auto mouse = getMousePosition();
 		if (mouse != click_position)
 		{
 			directional_spawn_acc = 0.f;

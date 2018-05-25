@@ -10,6 +10,7 @@ class GameScene : public Scene
 	EntityManager em;
 
 	sf::Vector2f click_position;
+	sf::Vector2f getMousePosition();
 
 	bool directional_spawn = false;
 	float directional_spawn_acc = 0.f;

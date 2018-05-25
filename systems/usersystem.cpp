@@ -1,11 +1,13 @@
 #include "engine.hpp"
 #include "usersystem.hpp"
 
+#include "components\portal.hpp"
 #include "components\body.hpp"
 #include "components\colorable.hpp"
 #include "components\renderable.hpp"
 #include "components\lerpable.hpp"
 #include "components\holdable.hpp"
+#include "components\teleportable.hpp"
 
 #include "utils.hpp"
 
@@ -19,6 +21,7 @@ UserSystem::UserSystem()
 void UserSystem::onInit()
 {
 	eventDispatcher->sink<GameEvent::SpawnBall>().connect(this);
+	eventDispatcher->sink<GameEvent::SpawnPortal>().connect(this);
 	eventDispatcher->sink<GameEvent::FreeArea>().connect(this);
 	eventDispatcher->sink<GameEvent::EscapeFromArea>().connect(this);
 }
@@ -57,10 +60,39 @@ void UserSystem::receive(const GameEvent::SpawnBall &event)
 	float size = Body::MIN_START_SIZE + static_cast<float>(std::rand() % 2);
 
 	auto entity = registry->create();
-	registry->assign<Body>(entity, position, direction * static_cast<float>(Body::MAX_SPEED), size);
+	registry->assign<Body>(entity, position, direction * static_cast<float>(Body::SPEED), size);
 	registry->assign<Colorable>(entity);
+	registry->assign<Teleportable>(entity);
 	registry->assign<Renderable>(entity, position);
 }
+
+void UserSystem::receive(const GameEvent::SpawnPortal &event)
+{
+	static int e_link = -1; // todo remove this dirty flag
+
+	auto entity = registry->create();
+	registry->assign<Body>(entity, event.position, sf::Vector2f(), (float)Body::PORTAL_SIZE);
+	registry->assign<Portal>(entity);
+	registry->assign<Colorable>(entity);
+	registry->assign<Renderable>(entity, event.position);
+
+	auto& c = registry->get<Colorable>(entity);
+	c.color = sf::Color(20, 20, 40);
+	c.decay = sf::seconds(65536);
+
+
+	if (e_link != -1)
+	{
+		registry->get<Portal>(entity).link = e_link;
+		registry->get<Portal>(e_link).link = entity;
+
+		e_link = -1;
+	}
+	else
+		e_link = entity;
+		
+}
+
 
 void UserSystem::receive(const GameEvent::FreeArea &event)
 {
@@ -68,7 +100,7 @@ void UserSystem::receive(const GameEvent::FreeArea &event)
 	
 	registry->view<Body, Colorable>().each([&](auto entity, Body &body, Colorable& colorable)
 	{ 
-		if (border.contains(body.position))
+		if (!registry->has<Portal>(entity) && border.contains(body.position))
 			if (event.collapse)
 			{
 				colorable.color = sf::Color(123, 212, 80);
@@ -84,7 +116,7 @@ void UserSystem::receive(const GameEvent::FreeArea &event)
 
 void UserSystem::receive(const GameEvent::EscapeFromArea &event)
 {
-	static bool ready = true; // todo remove this dirty flag
+	static bool ready = true; // todo again remove this dirty flag
 
 	if (!event.hold)
 	{
@@ -94,7 +126,7 @@ void UserSystem::receive(const GameEvent::EscapeFromArea &event)
 			auto &body = view.get<Body>(entity);
 			auto &colorable = view.get<Colorable>(entity);
 
-			body.direction = utils::normalize(body.position - event.position) * static_cast<float>(Body::MAX_SPEED) * 2.f;
+			body.direction = utils::normalize(body.position - event.position) * static_cast<float>(Body::SPEED) * 2.f;
 
 			colorable.decay = sf::seconds(3);
 			colorable.timer = sf::Time::Zero;

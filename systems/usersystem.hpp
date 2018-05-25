@@ -5,6 +5,7 @@
 #include <SFML\Graphics\Rect.hpp>
 
 #include "events\spawnball.hpp"
+#include "events\spawnportal.hpp"
 #include "events\freearea.hpp"
 #include "events\escapefromarea.hpp"
 
@@ -18,6 +19,7 @@ public:
 	UserSystem();
 
 	void receive(const GameEvent::SpawnBall &);
+	void receive(const GameEvent::SpawnPortal &);
 	void receive(const GameEvent::FreeArea &);
 	void receive(const GameEvent::EscapeFromArea &);
 };
