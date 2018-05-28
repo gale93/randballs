@@ -141,7 +141,7 @@ void UserSystem::receive(const GameEvent::EscapeFromArea &event)
 
 		registry->view<Body, Colorable>().each([&](auto entity, Body &body, Colorable& colorable)
 		{
-			if (border.contains(body.position))
+			if (!registry->has<Portal>(entity) && border.contains(body.position))
 			{
 				colorable.color = sf::Color(194, 177, 128);
 				colorable.decay = sf::seconds(2048);
