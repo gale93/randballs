@@ -2,9 +2,8 @@
 
 #include <ctime>
 #include <chrono>
-
-#include "scenes\gamescene.hpp"
-
+#include <scenes/gamescene.hpp>
+#include <memory>
 
 Engine::Engine() : sceneMng(this)
 {
@@ -12,9 +11,7 @@ Engine::Engine() : sceneMng(this)
 }
 
 
-Engine::~Engine()
-{
-}
+Engine::~Engine() = default;
 
 void Engine::stop() { isRunning = false; }
 

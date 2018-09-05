@@ -3,7 +3,8 @@
 #include "scene.hpp"
 #include "entitymanager.hpp"
 
-#include <SFML\Graphics\Text.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 class GameScene : public Scene
 {

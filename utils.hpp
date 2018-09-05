@@ -1,8 +1,5 @@
 #pragma once
 
-#include <SFML\System\Vector2.hpp>
-
-
 namespace utils
 {
 	inline float getLength(sf::Vector2f& vec)

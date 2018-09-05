@@ -1,3 +1,4 @@
+#include <SFML/Window/Event.hpp>
 #include "engine.hpp"
 #include "scene.hpp"
 

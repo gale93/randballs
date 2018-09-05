@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SFML\System\Vector2.hpp>
+#include <SFML/Audio.hpp>
 
 namespace GameComponent
 {

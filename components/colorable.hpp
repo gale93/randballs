@@ -1,7 +1,6 @@
 #pragma once
 
-#include <SFML\Graphics\Color.hpp>
-#include <SFML\System\Time.hpp>
+#include <SFML/Graphics/Color.hpp>
 
 namespace GameComponent
 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <SFML\Graphics\RenderWindow.hpp>
-#include <SFML\Window\Event.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Font.hpp>
 #include "scenemanager.hpp"
 #include "texturemanager.hpp"
 

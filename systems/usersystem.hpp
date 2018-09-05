@@ -2,12 +2,10 @@
 
 #include "basesystem.hpp"
 
-#include <SFML\Graphics\Rect.hpp>
-
-#include "events\spawnball.hpp"
-#include "events\spawnportal.hpp"
-#include "events\freearea.hpp"
-#include "events\escapefromarea.hpp"
+#include "events/spawnball.hpp"
+#include "events/spawnportal.hpp"
+#include "events/freearea.hpp"
+#include "events/escapefromarea.hpp"
 
 class UserSystem : public BaseSystem
 {

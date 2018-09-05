@@ -1,8 +1,8 @@
 #pragma once
 
+#include <components/body.hpp>
+#include <SFML/Audio.hpp>
 #include "basesystem.hpp"
-
-#include "components\body.hpp"
 
 class CollisionSystem :  public BaseSystem
 {

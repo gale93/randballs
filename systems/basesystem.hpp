@@ -1,7 +1,8 @@
 #pragma once
 
-#include <entt\entity\registry.hpp>
-#include <entt\signal\dispatcher.hpp>
+#include <external/entt/entity/registry.hpp>
+#include <external/entt/entt.hpp>
+#include <SFML/Graphics/Font.hpp>
 
 class BaseSystem
 {

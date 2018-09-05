@@ -1,13 +1,13 @@
 #include "engine.hpp"
 #include "usersystem.hpp"
 
-#include "components\portal.hpp"
-#include "components\body.hpp"
-#include "components\colorable.hpp"
-#include "components\renderable.hpp"
-#include "components\lerpable.hpp"
-#include "components\holdable.hpp"
-#include "components\teleportable.hpp"
+#include "components/portal.hpp"
+#include "components/body.hpp"
+#include "components/colorable.hpp"
+#include "components/renderable.hpp"
+#include "components/lerpable.hpp"
+#include "components/holdable.hpp"
+#include "components/teleportable.hpp"
 
 #include "utils.hpp"
 
@@ -107,7 +107,10 @@ void UserSystem::receive(const GameEvent::FreeArea &event)
 				colorable.decay = sf::seconds(3);
 				colorable.timer = sf::Time::Zero;
 
-				registry->assign<Lerpable>(entity, event.position);
+				// bad idea if you click twice quickly you try to assign same comp
+						// registry->assign<Lerpable>(entity, event.position);
+				// not as perforemant but safer
+				registry->accommodate<Lerpable>(entity, event.position);
 			}
 			else
 				registry->destroy(entity);
