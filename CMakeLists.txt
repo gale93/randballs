@@ -87,7 +87,7 @@ add_executable(randballs
         scenemanager.hpp
         texturemanager.cpp
         texturemanager.hpp
-        utils.hpp)
+        utils.hpp components/sharedstate.h)
 
 target_link_libraries (randballs sfml-graphics sfml-window sfml-system)
 file(COPY media DESTINATION ${CMAKE_BINARY_DIR})

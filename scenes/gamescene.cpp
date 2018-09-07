@@ -37,11 +37,17 @@ GameScene::GameScene() : Scene("game")
 
 GameScene::~GameScene()
 {
+
 }
 
 void GameScene::init()
 {
 	em.init(engine);
+
+	// create a shared taged entity for temporal data
+	entt::DefaultRegistry* registry = em.getDefaultRegistry();
+	auto ent = registry->create();
+	registry->assign<GameComponent::SharedState>(entt::tag_t{}, ent);
 
 	em.addSystem(std::make_unique<UserSystem>());
 	em.addSystem(std::make_unique<MoveSystem>());

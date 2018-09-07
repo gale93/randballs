@@ -13,11 +13,6 @@
 
 using namespace GameComponent;
 
-UserSystem::UserSystem()
-{
-	
-}
-
 void UserSystem::onInit()
 {
 	eventDispatcher->sink<GameEvent::SpawnBall>().connect(this);
@@ -68,7 +63,7 @@ void UserSystem::receive(const GameEvent::SpawnBall &event)
 
 void UserSystem::receive(const GameEvent::SpawnPortal &event)
 {
-	static int e_link = -1; // todo remove this dirty flag
+	SharedState& sharedState = registry->get<SharedState>();
 
 	auto entity = registry->create();
 	registry->assign<Body>(entity, event.position, sf::Vector2f(), (float)Body::PORTAL_SIZE);
@@ -81,25 +76,24 @@ void UserSystem::receive(const GameEvent::SpawnPortal &event)
 	c.decay = sf::seconds(65536);
 
 
-	if (e_link != -1)
+	if (sharedState.e_link != -1)
 	{
-		registry->get<Portal>(entity).link = e_link;
-		registry->get<Portal>(e_link).link = entity;
+		registry->get<Portal>(entity).link = sharedState.e_link;
+		registry->get<Portal>(sharedState.e_link).link = entity;
 
-		e_link = -1;
+		sharedState.e_link = -1;
 	}
 	else
-		e_link = entity;
-		
+		sharedState.e_link = entity;
 }
 
 
 void UserSystem::receive(const GameEvent::FreeArea &event)
 {
 	auto border = generateRect(event.position);
-	
+
 	registry->view<Body, Colorable>().each([&](auto entity, Body &body, Colorable& colorable)
-	{ 
+	{
 		if (!registry->has<Portal>(entity) && border.contains(body.position))
 			if (event.collapse)
 			{
@@ -119,10 +113,28 @@ void UserSystem::receive(const GameEvent::FreeArea &event)
 
 void UserSystem::receive(const GameEvent::EscapeFromArea &event)
 {
-	static bool ready = true; // todo again remove this dirty flag
+	SharedState& sharedState = registry->get<SharedState>();
 
-	if (!event.hold)
+	// start new hold operation
+	if ( event.hold && !sharedState.isHolding )
 	{
+		sharedState.isHolding = true;
+		auto border = generateRect(event.position);
+
+		registry->view<Body, Colorable>().each( [&](auto entity, Body &body, Colorable& colorable)
+		{
+		   if (!registry->has<Portal>(entity) && border.contains(body.position))
+		   {
+			   colorable.color = sf::Color(194, 177, 128);
+			   colorable.decay = sf::seconds(2048);
+
+			   registry->assign<Holdable>(entity);
+		   }
+
+		});
+	}
+	// let held go
+	else if ( !event.hold ) {
 		auto view = registry->view<Body, Colorable, Holdable>();
 		for (auto entity : view)
 		{
@@ -136,26 +148,6 @@ void UserSystem::receive(const GameEvent::EscapeFromArea &event)
 		}
 
 		registry->reset<Holdable>();
-		ready = true;
+		sharedState.isHolding = false;
 	}
-	else if (ready == true)
-	{
-		auto border = generateRect(event.position);
-
-		registry->view<Body, Colorable>().each([&](auto entity, Body &body, Colorable& colorable)
-		{
-			if (!registry->has<Portal>(entity) && border.contains(body.position))
-			{
-				colorable.color = sf::Color(194, 177, 128);
-				colorable.decay = sf::seconds(2048);
-
-				registry->assign<Holdable>(entity);
-			}
-
-		});
-
-		ready = false;
-	}
-
-
 }

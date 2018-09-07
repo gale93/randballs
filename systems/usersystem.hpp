@@ -1,5 +1,6 @@
 #pragma once
 
+#include <components/sharedstate.h>
 #include "basesystem.hpp"
 
 #include "events/spawnball.hpp"
@@ -13,8 +14,8 @@ class UserSystem : public BaseSystem
 
 	sf::FloatRect generateRect(const sf::Vector2f& position);
 	sf::Vector2f generateRandomDirection();
+
 public:
-	UserSystem();
 
 	void receive(const GameEvent::SpawnBall &);
 	void receive(const GameEvent::SpawnPortal &);
