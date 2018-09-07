@@ -1,7 +1,7 @@
 #pragma once
 
-#include <SFML\Graphics\Texture.hpp>
 #include <unordered_map>
+#include <SFML/Graphics/Texture.hpp>
 
 class TextureManager
 {

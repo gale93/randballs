@@ -2,14 +2,12 @@
 
 #include <chrono>
 #include <unordered_map>
+#include <components/colorable.hpp>
+#include <components/portal.hpp>
+#include <events/teleport.hpp>
 
 #include "engine.hpp"
 #include "utils.hpp"
-
-#include "components\colorable.hpp"
-#include "components\portal.hpp"
-
-#include "events\teleport.hpp"
 
 using namespace GameComponent;
 
@@ -92,7 +90,6 @@ void CollisionSystem::ballToBall(unsigned int ent, GameComponent::Body& body, un
 	if (colorable.color == colorable2.color)
 	{
 		Body *new_body = body.size > body2.size ? &body : &body2;
-
 		if (++new_body->size >= Body::MAX_SIZE)
 		{
 			Body *other_body = body.size > body2.size ? &body2 : &body;
@@ -100,8 +97,9 @@ void CollisionSystem::ballToBall(unsigned int ent, GameComponent::Body& body, un
 			new_body->size = other_body->size = Body::MAX_SIZE * 0.5f;
 		}
 		else
+		{
 			registry->destroy(body.size > body2.size ? ent2 : ent);
-
+		}
 	}
 }
 
@@ -121,22 +119,24 @@ void CollisionSystem::update(const float dt)
 	}
 
 	for (auto& area : quadtree)
+	{
 		for (auto it = area.second.begin(); it != area.second.end(); it++)
 		{
 			if (!registry->valid(*it))
 				continue;
 
-			auto &body = view.get(*it);
-
 			for (auto it2 = it + 1; it2 != area.second.end(); it2++)
 			{
+				if (!registry->valid(*it))
+					break;
+
 				if (!registry->valid(*it2))
 					continue;
 
+                auto &body = view.get(*it);
 				auto &body2 = view.get(*it2);
 
-				if (isColliding(body, body2))
-				{
+				if (isColliding(body, body2)) {
 					if (registry->has<Portal>(*it))
 						eventDispatcher->trigger<GameEvent::Teleport>(*it2, *it);
 					else if (registry->has<Portal>(*it2))
@@ -145,6 +145,6 @@ void CollisionSystem::update(const float dt)
 						ballToBall(*it, body, *it2, body2);
 				}
 			}
-
 		}
+	}
 }

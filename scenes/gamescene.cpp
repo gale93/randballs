@@ -1,12 +1,16 @@
+#include <memory>
+#include <SFML/Window/Mouse.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/Font.hpp>
 #include "engine.hpp"
 #include "gamescene.hpp"
 
-#include "systems\rendersystem.hpp"
-#include "systems\usersystem.hpp"
-#include "systems\movesystem.hpp"
-#include "systems\colorsystem.hpp"
-#include "systems\collisionsystem.hpp"
-#include "systems\teleportsystem.hpp"
+#include "systems/rendersystem.hpp"
+#include "systems/usersystem.hpp"
+#include "systems/movesystem.hpp"
+#include "systems/colorsystem.hpp"
+#include "systems/collisionsystem.hpp"
+#include "systems/teleportsystem.hpp"
 
 #include "utils.hpp"
 
@@ -33,11 +37,17 @@ GameScene::GameScene() : Scene("game")
 
 GameScene::~GameScene()
 {
+
 }
 
 void GameScene::init()
 {
 	em.init(engine);
+
+	// create a shared taged entity for temporal data
+	entt::DefaultRegistry* registry = em.getDefaultRegistry();
+	auto ent = registry->create();
+	registry->assign<GameComponent::SharedState>(entt::tag_t{}, ent);
 
 	em.addSystem(std::make_unique<UserSystem>());
 	em.addSystem(std::make_unique<MoveSystem>());

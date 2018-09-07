@@ -1,10 +1,10 @@
 #include "teleportsystem.hpp"
 
 #include "engine.hpp"
-#include "components\body.hpp"
-#include "components\portal.hpp"
-#include "components\teleportable.hpp"
-#include "components\renderable.hpp"
+#include "components/body.hpp"
+#include "components/portal.hpp"
+#include "components/teleportable.hpp"
+#include "components/renderable.hpp"
 
 #include "utils.hpp"
 
