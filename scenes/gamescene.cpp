@@ -1,12 +1,12 @@
 #include "engine.hpp"
 #include "gamescene.hpp"
 
-#include "systems\rendersystem.hpp"
-#include "systems\usersystem.hpp"
-#include "systems\movesystem.hpp"
-#include "systems\colorsystem.hpp"
-#include "systems\collisionsystem.hpp"
-#include "systems\teleportsystem.hpp"
+#include "systems/rendersystem.hpp"
+#include "systems/usersystem.hpp"
+#include "systems/movesystem.hpp"
+#include "systems/colorsystem.hpp"
+#include "systems/collisionsystem.hpp"
+#include "systems/teleportsystem.hpp"
 
 #include "utils.hpp"
 

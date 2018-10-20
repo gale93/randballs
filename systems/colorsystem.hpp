@@ -1,7 +1,7 @@
 #pragma once
 
 #include "basesystem.hpp"
-#include "SFML\Graphics\Color.hpp"
+#include "SFML/Graphics/Color.hpp"
 
 class ColorSystem : public BaseSystem
 {

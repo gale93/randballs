@@ -1,13 +1,13 @@
 #include "engine.hpp"
 #include "usersystem.hpp"
 
-#include "components\portal.hpp"
-#include "components\body.hpp"
-#include "components\colorable.hpp"
-#include "components\renderable.hpp"
-#include "components\lerpable.hpp"
-#include "components\holdable.hpp"
-#include "components\teleportable.hpp"
+#include "components/portal.hpp"
+#include "components/body.hpp"
+#include "components/colorable.hpp"
+#include "components/renderable.hpp"
+#include "components/lerpable.hpp"
+#include "components/holdable.hpp"
+#include "components/teleportable.hpp"
 
 #include "utils.hpp"
 

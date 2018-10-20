@@ -2,7 +2,7 @@
 
 #include "basesystem.hpp"
 
-#include "components\body.hpp"
+#include "components/body.hpp"
 
 class MoveSystem :  public BaseSystem
 {

@@ -1,7 +1,7 @@
 #include "colorsystem.hpp"
 
 #include "engine.hpp"
-#include "components\colorable.hpp"
+#include "components/colorable.hpp"
 
 using namespace GameComponent;
 

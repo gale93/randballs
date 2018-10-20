@@ -1,9 +1,9 @@
 #include "movesystem.hpp"
 
 #include "engine.hpp"
-#include "components\body.hpp"
-#include "components\lerpable.hpp"
-#include "components\holdable.hpp"
+#include "components/body.hpp"
+#include "components/lerpable.hpp"
+#include "components/holdable.hpp"
 
 #include "utils.hpp"
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <entt\entity\registry.hpp>
-#include <entt\signal\dispatcher.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
 
 class BaseSystem
 {

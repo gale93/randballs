@@ -6,10 +6,10 @@
 #include "engine.hpp"
 #include "utils.hpp"
 
-#include "components\colorable.hpp"
-#include "components\portal.hpp"
+#include "components/colorable.hpp"
+#include "components/portal.hpp"
 
-#include "events\teleport.hpp"
+#include "events/teleport.hpp"
 
 using namespace GameComponent;
 

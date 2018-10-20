@@ -1,11 +1,11 @@
 #include "engine.hpp"
 #include "rendersystem.hpp"
 
-#include <SFML\Graphics\CircleShape.hpp>
+#include <SFML/Graphics/CircleShape.hpp>
 
-#include "components\renderable.hpp"
-#include "components\body.hpp"
-#include "components\colorable.hpp"
+#include "components/renderable.hpp"
+#include "components/body.hpp"
+#include "components/colorable.hpp"
 
 #include "utils.hpp"
 
