@@ -107,7 +107,7 @@ void UserSystem::receive(const GameEvent::FreeArea &event)
 				colorable.decay = sf::seconds(3);
 				colorable.timer = sf::Time::Zero;
 
-				registry->assign<Lerpable>(entity, event.position);
+				registry->accommodate<Lerpable>(entity, event.position);
 			}
 			else
 				registry->destroy(entity);
