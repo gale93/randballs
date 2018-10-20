@@ -100,8 +100,12 @@ void CollisionSystem::ballToBall(unsigned int ent, GameComponent::Body& body, un
 			new_body->size = other_body->size = Body::MAX_SIZE * 0.5f;
 		}
 		else
-			registry->destroy(body.size > body2.size ? ent2 : ent);
-
+		{
+			auto _e = body.size > body2.size ? ent2 : ent;
+			
+			if (registry->valid(_e))
+				registry->destroy(_e);
+		}
 	}
 }
 
