@@ -134,7 +134,7 @@ void CollisionSystem::update(const float dt)
 
 			for (auto it2 = it + 1; it2 != area.second.end(); it2++)
 			{
-				if (!registry->valid(*it2))
+				if (!registry->valid(*it) || !registry->valid(*it2))
 					continue;
 
 				auto &body2 = view.get(*it2);
